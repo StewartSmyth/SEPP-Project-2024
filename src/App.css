@@ -1,5 +1,16 @@
 .App {
-  text-align: center;
+  max-width: fit-content;
+  margin-inline: auto;
+  font-size: xx-large;
+}
+
+table, th, td {
+  border: 1px solid;
+  padding: 5px;
+}
+
+.RecipeTable{
+  font-size: x-large;
 }
 
 .App-logo {
@@ -27,6 +38,8 @@
 .App-link {
   color: #61dafb;
 }
+
+
 
 @keyframes App-logo-spin {
   from {
