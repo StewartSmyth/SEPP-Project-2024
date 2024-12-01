@@ -15,15 +15,17 @@ function App() {
       <h2>Recipe Table</h2>
       <table className="RecipeTable">
         <tr>
-          <th>Test</th>
-          <th>Test2</th>
-          <th>ingredients</th>
+          <th>Recipe Name</th>
+          <th>Recipe Time</th>
+          <th>Ingredients</th>
+          <th>Link</th>
         </tr>
         {recipeList.map(recipe=> (
           <tr key={recipe.id}>
-            <td>{recipe.Name}</td> 
-            <td>{recipe.Test2}</td>
+            <td>{recipe.name}</td> 
+            <td>{recipe.time}</td>
             <td>{recipe.ingredients}</td>
+            <td>{recipe.link}</td>
           </tr>
         ))}
       </table>
