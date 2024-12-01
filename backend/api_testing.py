@@ -6,8 +6,12 @@ class APITesting(unittest.TestCase):
     def setUp(self):
         self.client = app.test_client()
     
-    def indexTest(self):
+    def test_index(self):
         response = self.client.get('/')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(b'Index Pag', response.data)
-        print(response.data)
+
+    #structure for test is test_{name of test}
+
+if __name__ == "__main__":
+    unittest.main()
