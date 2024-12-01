@@ -25,7 +25,7 @@ function App() {
             <td>{recipe.name}</td> 
             <td>{recipe.time}</td>
             <td>{recipe.ingredients}</td>
-            <td>{recipe.link}</td>
+            <td><a href={recipe.link}>{recipe.link}</a></td>
           </tr>
         ))}
       </table>
