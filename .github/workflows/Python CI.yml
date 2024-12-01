@@ -37,7 +37,7 @@ jobs:
         
       - name: "Run Api"
         run: |
-          python backend/api.py
+          python backend/api_testing.py
 
         
   
