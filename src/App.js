@@ -24,7 +24,13 @@ function App() {
           <tr key={recipe.id}>
             <td>{recipe.name}</td> 
             <td>{recipe.time}</td>
-            <td>{recipe.ingredients}</td>
+            <td>
+            <ul>
+            {recipe.ingredients.map((ingredient) => (
+              <li>{ingredient}</li>
+            ))}
+            </ul>
+            </td>
             <td><a href={recipe.link}>{recipe.link}</a></td>
           </tr>
         ))}
