@@ -9,4 +9,4 @@ class APITesting(unittest.TestCase):
     def indexTest(self):
         response = self.client.get('/')
         self.assertEqual(response.status_code, 200)
-        self.assertIn(b'Index Pag', response.data)
+        self.assertEqual(b'Index Pag', response.data)
