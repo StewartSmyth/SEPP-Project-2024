@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="C:/Users/georg/Group_Project/SEPP-Project-2024/backend/ssh_database.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="1"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="125"/><column_width id="3" width="1808"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><current_table name="4,11:mainingredients"/><default_encoding codec=""/><browse_table_settings><table schema="main" name="ingredients" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="2" value="156"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="users" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="74"/><column index="2" value="94"/><column index="3" value="93"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table></browse_table_settings></tab_browse><tab_sql><sql name="SQL 1">
+CREATE TABLE IF NOT EXISTS users (
+    user_id INT PRIMARY KEY,
+    username VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS ingredients (
+    ingredient_id INT PRIMARY KEY,
+    ingredient_name VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS recipes (
+    recipe_id INT PRIMARY KEY,
+    recipe_name VARCHAR(255) NOT NULL,
+    recipe_link VARCHAR(255),
+    recipe_cooking_time INT
+);
+
+CREATE TABLE IF NOT EXISTS recipe_ingredient (
+    recipe_id INT,
+    ingredient_id INT,
+    PRIMARY KEY (recipe_id, ingredient_id),
+    FOREIGN KEY (recipe_id) REFERENCES recipes(recipe_id),
+    FOREIGN KEY (ingredient_id) REFERENCES ingredients(ingredient_id)
+);
+
+CREATE TABLE IF NOT EXISTS user_ingredients (
+    user_id INT,
+    ingredient_id INT,
+    PRIMARY KEY (user_id, ingredient_id),
+    FOREIGN KEY (user_id) REFERENCES users(user_id),
+    FOREIGN KEY (ingredient_id) REFERENCES ingredients(ingredient_id)
+);
+
+INSERT INTO users (user_id, username, password) VALUES
+(1, 'user1', '1234'),
+(2, 'user2', '5678'),
+(3, 'user3', '1357');
+
+
+INSERT INTO ingredients (ingredient_id, ingredient_name) VALUES
+(1, 'Rice'),
+(2, 'Tomato'),
+(3, 'Garlic'),
+(4, 'Cheese'),
+(5, 'Canned Beans'),
+(6, 'Chicken Breast'),
+(7, 'Bread'),
+(8, 'Canned Tuna'),
+(9, 'Spinach'),
+(10, 'Yogurt'),
+(11, 'Pasta'),
+(12, 'Onion'),
+(13, 'Eggs'),
+(14, 'Lettuce'),
+(15, 'Carrot'),
+(16, 'Milk'),
+(17, 'Bell Pepper'),
+(18, 'Potatoes'),
+(19, 'Ham'),
+(20, 'Avocado'),
+(21, 'Cucumber'),
+(22, 'Frozen Peas'),
+(23, 'Olive Oil'),
+(24, 'Bacon'),
+(25, 'Mushrooms');
+
+-- Insert sample data into recipes
+INSERT INTO recipes (recipe_id, recipe_name, recipe_link, recipe_cooking_time) VALUES
+(1, 'Tomato Soup', 'http://example.com/tomato_soup', 30),
+(2, 'Tuna Sandwich', 'http://example.com/tuna_sandwich', 10),
+(3, 'Spinach and Cheese Sandwich', 'http://example.com/spinach_cheese_sandwich', 15),
+(4, 'Pasta Carbonara', 'http://example.com/pasta_carbonara', 25),
+(5, 'Egg Salad', 'http://example.com/egg_salad', 15),
+(6, 'Cucumber Salad', 'http://example.com/cucumber_salad', 10);
+
+INSERT INTO recipe_ingredient (recipe_id, ingredient_id) VALUES
+(1, 2), (1, 3), (1, 6), (1, 7),
+(2, 8), (2, 7), (2, 2), (2, 4),
+(3, 7), (3, 9), (3, 4),
+(4, 11), (4, 12), (4, 13),
+(5, 13), (5, 14), (5, 15), (5, 10),
+(6, 21), (6, 10);
+
+INSERT INTO user_ingredients (user_id, ingredient_id) VALUES
+(1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (1, 7), (1, 8), (1, 9), (1, 10),
+(2, 11), (2, 12), (2, 13), (2, 14), (2, 15), (2, 16), (2, 17), (2, 18), (2, 19), (2, 20),
+(3, 1), (3, 3), (3, 21), (3, 16), (3, 18), (3, 22), (3, 23), (3, 24), (3, 25);
+</sql><current_tab id="0"/></tab_sql></sqlb_project>
