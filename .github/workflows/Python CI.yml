@@ -35,7 +35,7 @@ jobs:
         run: |
           pip install -r backend/requirements.txt
         
-      - name: "Run Api"
+      - name: "Run Api_Testing"
         run: python backend/api_testing.py
 
         
