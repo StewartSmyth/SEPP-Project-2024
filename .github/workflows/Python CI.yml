@@ -33,8 +33,7 @@ jobs:
       
       - name: "Install dependencies"
         run: |
-          python -m pip install Flask
-          python -m pip install SQLAlchemy
+          pip install -r backend/requirements.txt
         
       - name: "Run Api"
         run: |
