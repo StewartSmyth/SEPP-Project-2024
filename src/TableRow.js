@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react';
+import { getRecipes } from './recipeService';
 
 
-function TableRows(args) {
+function TableRows(props) {
   const [recipeList, setRecipeList] = useState([]);
 
   useEffect(() => {
