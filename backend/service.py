@@ -43,24 +43,17 @@ engine = create_engine(Database_url, echo=False)
 Session = sessionmaker(bind=engine)
 session = Session()
 
-def login():
-    usernamein = input("enter username: ")
-    usernamecheck = session.query(House).filter(House.username == usernamein).all()
+def login(usernamein):
+    usernamecheck = session.query(House).filter(House.username == usernamein).first()
     if usernamecheck:
-        passwordin = input("enter password: ")
-        passwordcheck = session.query(House).filter(House.username == usernamein, House.password == passwordin).first()
-        if passwordcheck:
-            print("correct username and password!")
-            return passwordcheck.house_id
-        else:
-            print("incorrect password\n")
+        return usernamecheck.house_id
     else:
-        print("incorrect username\n")
+        return -1
 
 def houseingre(houseid):
     house_ingredients = session.query(Ingredients.ingredient_name).join(houseIngredients, houseIngredients.ingredient_id == Ingredients.ingredient_id).filter(houseIngredients.house_id == int(houseid)).all()
     if not house_ingredients:
-        print("No ingredients found.\n")
+        return -1
     else:
         ingredientnames = []
         for ingredient in house_ingredients:
@@ -69,8 +62,6 @@ def houseingre(houseid):
 
 def houserecipes(ingredientList):
     validrecipes = []
-
-
     recipelist = session.query(recipes).all()
 
     for currentRecipe in recipelist:
@@ -80,18 +71,34 @@ def houserecipes(ingredientList):
             recipe_ingredients.append(ingredient[0])
 
         if all(ingredient in ingredientList for ingredient in recipe_ingredients):
-            validrecipes.append(currentRecipe)
-      
+            validrecipes.append((currentRecipe, recipe_ingredients))
+    
+    retRecipes = []
     if validrecipes:
         for recipe in validrecipes:
-            print(f"Recipe name: {recipe.recipe_name}, Recipe Link: {recipe.recipe_link}, Recipe time: {recipe.recipe_cooking_time}")
+            retRecipes.append({"id": recipe[0].recipe_id,
+                              "name": recipe[0].recipe_name,
+                              "time": recipe[0].recipe_cooking_time,
+                              "ingredients": recipe[1],
+                              "link": recipe[0].recipe_link
+                              })
+        return retRecipes
     else:
-        print("No recipes found with the available ingredients.")
+        return {"id": -1, "name": "no recipes found"}
+    
 
-houseid = login()
-if houseid:
-    ingredientsList = houseingre(houseid)
-    if ingredientsList:
-        houserecipes(ingredientsList)
+def query(username):
+    houseID = login(username)
+    if houseID == -1:
+        return {"id": -2, "name": "input correct username"}
+    else:
+        ingredientsHouse = houseingre(houseID)
+        if ingredientsHouse == -1:
+            return {"id": -3, "name": "No ingredients found"}
+        else:
+            return houserecipes(ingredientsHouse)
+
+"""value = input("username: ")
+print(query(value))"""
         
 session.close()
