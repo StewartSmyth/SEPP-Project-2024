@@ -28,8 +28,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: "Install node.js dependencies"
-          run: npm install
-          working-directory: ./src
+        run: npm install
       
       - uses: actions/setup-python@v5
         with:
