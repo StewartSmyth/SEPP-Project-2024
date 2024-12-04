@@ -8,27 +8,7 @@ function App() {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredRecipes, setFilteredRecipes] = useState(recipeList);
   const [houseName, setHouseName] = useState('');
-  const [generate, setGenerate] = useState(false);
 
-
-
-  useEffect(() => {
-    console.log(houseName);
-    if(houseName !== ''){
-      fetch('/recipes/'.concat(houseName))
-      .then(res=>res.json())
-      .then(data=>setRecipeList(data));
-    }
-    else{
-      setRecipeList([{"id": -1,
-    "name": "Input House Name",
-    "time": "",
-    "ingredients": [
-      ""
-    ],
-    "link": ""}])
-    }
-  }, [generate]);
 
   useEffect(() => {
     setFilteredRecipes(recipeList);
@@ -49,9 +29,22 @@ function App() {
   }
 
 
-
-  const onClickSub = async () => {
-    setGenerate(!generate);
+  const onC = () => {
+    console.log(houseName);
+    if(houseName !== ''){
+      fetch('/recipes/'.concat(houseName))
+      .then(res=>res.json())
+      .then(data=>setRecipeList(data));
+    }
+    else{
+      setRecipeList([{"id": -1,
+    "name": "Input House Name",
+    "time": "",
+    "ingredients": [
+      ""
+    ],
+    "link": ""}])
+    }
   }
 
 
@@ -60,7 +53,7 @@ function App() {
       <h2>Recipe Table</h2>
       
       <input type='text' value={houseName} onChange={e=>setHouseName(e.target.value)}></input>
-      <input type='submit' onClick={onClickSub}/>
+      <input type='submit' onClick={onC}/>
       
       <br></br>
       
