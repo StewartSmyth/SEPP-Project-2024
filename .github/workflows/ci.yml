@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-  pull_request:  
+  pull_request:
   workflow_dispatch:
 
 jobs:
@@ -16,10 +16,20 @@ jobs:
       fail-fast: False
       matrix:
         python-version: [3.13]
+        node-version: [14.x]
     
     steps:
       - name: "Clone Repository"
         uses: actions/checkout@v4
+      
+      - name: "Setup Node.js"
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: "Install node.js dependencies"
+          run: npm install
+          working-directory: ./src
       
       - uses: actions/setup-python@v5
         with:
