@@ -7,20 +7,37 @@ function App() {
   const [recipeList, setRecipeList] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredRecipes, setFilteredRecipes] = useState(recipeList);
+  const [houseName, setHouseName] = useState('');
+  const [generate, setGenerate] = useState(false);
+
 
 
   useEffect(() => {
-    fetch('/recipes')
-    .then(res=>res.json())
-    .then(data=>setRecipeList(data));
-  }, []);
+    console.log(houseName);
+    if(houseName !== ''){
+      fetch('/recipes/'.concat(houseName))
+      .then(res=>res.json())
+      .then(data=>setRecipeList(data));
+    }
+    else{
+      setRecipeList([{"id": -1,
+    "name": "Input House Name",
+    "time": "",
+    "ingredients": [
+      ""
+    ],
+    "link": ""}])
+    }
+  }, [generate]);
 
   useEffect(() => {
     setFilteredRecipes(recipeList);
   }, [recipeList]);
 
+
+
   const handleInputChange = (event) => {
-    const { value } = event.target
+    const { value } = event.target;
     setSearchTerm(value);
     filterData(value);
   }
@@ -32,9 +49,21 @@ function App() {
   }
 
 
+
+  const onClickSub = async () => {
+    setGenerate(!generate);
+  }
+
+
   return (
     <div className="App">
       <h2>Recipe Table</h2>
+      
+      <input type='text' value={houseName} onChange={e=>setHouseName(e.target.value)}></input>
+      <input type='submit' onClick={onClickSub}/>
+      
+      <br></br>
+      
       <input type = "text" placeholder='Search...' value = {searchTerm} onChange={handleInputChange}/>
       <table className="RecipeTable">
         <tr>
