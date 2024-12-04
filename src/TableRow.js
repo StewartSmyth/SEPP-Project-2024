@@ -1,8 +1,11 @@
 import React, {useState, useEffect} from 'react';
 
 
-function TableRows(args) {
+function TableRows(props) {
   const [recipeList, setRecipeList] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredRecipes, setFilteredRecipes] = useState(recipeList);
+
 
   useEffect(() => {
     fetch('/recipes')
@@ -10,8 +13,23 @@ function TableRows(args) {
     .then(data=>setRecipeList(data));
   }, []);
 
+  const handleInputChange = (event) => {
+    const { value } = event.target
+    setSearchTerm(value);
+    filterData(value);
+  }
+
+  const filterData = (searchTerm) => {
+    const filteredData = recipeList.filter((recipe) => 
+      recipe.name.toLowerCase().includes(searchTerm.toLowerCase()));
+    setFilteredRecipes(filteredData)
+  }
+
+
   return (
-        recipeList.map(recipe=> (
+    <div>
+        
+        {filteredRecipes.map(recipe => (
           <tr key={recipe.id}>
             <td>{recipe.name}</td> 
             <td>{recipe.time}</td>
@@ -24,7 +42,9 @@ function TableRows(args) {
             </td>
             <td><a href={recipe.link}>{recipe.link}</a></td>
           </tr>
-        ))
+        ))}
+  </div>
+
   )
 }
 
