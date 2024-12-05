@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask
 from markupsafe import escape
 import service
 
@@ -19,17 +19,17 @@ def tester():
 def ingredients(username):
     house_id = service.login(escape(username))
     if house_id == -1:
-        return jsonify({"id": -2, "name": "input correct username"})
+        return {"id": -2, "name": "input correct username"}
     
     ingredients_list = service.houseingre(house_id)
     if ingredients_list == -1:
-        return jsonify({"id": -3, "name": "No ingredients found"})
+        return {"id": -3, "name": "No ingredients found"}
     
-    return jsonify({"id": 0, "ingredients": ingredients_list})
+    return ingredients_list
 
 @app.route("/recipes/<username>")
 def recipes(username):
-    return(jsonify(service.query(escape(username))))
+    return(service.query(escape(username)))
 
 if __name__ == "__main__":
     app.run()
