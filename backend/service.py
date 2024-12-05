@@ -99,6 +99,8 @@ def query(username):
             return houserecipes(ingredientsHouse)
 
 """value = input("username: ")
-print(query(value))"""
+print((query(value))[0]["id"])"""
+
+
         
 session.close()
