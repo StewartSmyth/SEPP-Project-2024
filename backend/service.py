@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, String, ForeignKey, Sequence, create_eng
 from sqlalchemy.orm import sessionmaker, relationship, declarative_base
 from sqlalchemy.sql import text
 
-Database_url = "sqlite:///backend/ssh_database.db"
+Database_url = "sqlite:///ssh_database.db"
 
 Base = declarative_base()
 
@@ -51,15 +51,14 @@ def login(usernamein):
         return -1
 
 def houseingre(houseid):
-    house_ingredients = session.query(Ingredients.ingredient_id, Ingredients.ingredient_name).join(houseIngredients, houseIngredients.ingredient_id == Ingredients.ingredient_id).filter(houseIngredients.house_id == int(houseid)).all()
+    house_ingredients = session.query(Ingredients.ingredient_name).join(houseIngredients, houseIngredients.ingredient_id == Ingredients.ingredient_id).filter(houseIngredients.house_id == int(houseid)).all()
     if not house_ingredients:
         return -1
     else:
-        ingredient_list = []
+        ingredientnames = []
         for ingredient in house_ingredients:
-            ingredient_dict = {"id": ingredient.ingredient_id, "name": ingredient.ingredient_name}
-            ingredient_list.append(ingredient_dict)
-        return ingredient_list
+            ingredientnames.append(ingredient[0])
+        return ingredientnames
 
 def houserecipes(ingredientList):
     validrecipes = []
@@ -93,10 +92,8 @@ def query(username):
     if houseID == -1:
         return {"id": -2, "name": "input correct username"}
     else:
-        ingredientsHouse = []
-        for ingredient in houseingre(houseID):
-            ingredientsHouse.append(ingredient["name"])
-        if not ingredientsHouse:
+        ingredientsHouse = houseingre(houseID)
+        if ingredientsHouse == -1:
             return {"id": -3, "name": "No ingredients found"}
         else:
             return houserecipes(ingredientsHouse)
