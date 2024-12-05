@@ -52,6 +52,7 @@ jobs:
       - name: "Run Api_Testing"
         run: python backend/api_testing.py
 
-        
+      - name: "Run service_test"
+        run: python backend/service_test.py
   
 
