@@ -51,14 +51,15 @@ def login(usernamein):
         return -1
 
 def houseingre(houseid):
-    house_ingredients = session.query(Ingredients.ingredient_name).join(houseIngredients, houseIngredients.ingredient_id == Ingredients.ingredient_id).filter(houseIngredients.house_id == int(houseid)).all()
+    house_ingredients = session.query(Ingredients.ingredient_id, Ingredients.ingredient_name).join(houseIngredients, houseIngredients.ingredient_id == Ingredients.ingredient_id).filter(houseIngredients.house_id == int(houseid)).all()
     if not house_ingredients:
         return -1
     else:
-        ingredientnames = []
+        ingredient_list = []
         for ingredient in house_ingredients:
-            ingredientnames.append(ingredient[0])
-        return ingredientnames
+            ingredient_dict = {"id": ingredient.ingredient_id, "name": ingredient.ingredient_name}
+            ingredient_list.append(ingredient_dict)
+        return ingredient_list
 
 def houserecipes(ingredientList):
     validrecipes = []
@@ -92,8 +93,10 @@ def query(username):
     if houseID == -1:
         return {"id": -2, "name": "input correct username"}
     else:
-        ingredientsHouse = houseingre(houseID)
-        if ingredientsHouse == -1:
+        ingredientsHouse = []
+        for ingredient in houseingre(houseID):
+            ingredientsHouse.append(ingredient["name"])
+        if not ingredientsHouse:
             return {"id": -3, "name": "No ingredients found"}
         else:
             return houserecipes(ingredientsHouse)
