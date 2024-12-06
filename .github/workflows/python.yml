@@ -1,0 +1,53 @@
+name: "Python"
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: "Build"
+    runs-on: "ubuntu-latest"
+
+    strategy:
+      fail-fast: False
+      matrix:
+        python-version: [3.x]
+    
+    steps:
+      - name: "Clone Repository"
+        uses: actions/checkout@v4
+      
+      - name: "Setup Python"
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      
+      - name: "Cache dependencies"
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/backend/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+      
+      - name: "Create Virtual environment"
+        run: python -m venv venv
+      
+      - name: "Activate Virtual environment and Install dependencies"
+        run: |
+          source venv/bin/activate
+          pip install -r backend/requirements.txt
+        
+      - name: "Run Api_Testing"
+        run: |
+          source venv/bin/activate
+          python backend/api_testing.py
+
+      - name: "Run Service_Test"
+        run: |
+          source venv/bin/activate
+          python backend/service_testing.py

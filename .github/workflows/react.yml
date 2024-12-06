@@ -1,4 +1,4 @@
-name: "Continuous integration"
+name: "React"
 
 on:
   push:
@@ -15,7 +15,6 @@ jobs:
     strategy:
       fail-fast: False
       matrix:
-        python-version: [3.13]
         node-version: [14.x]
     
     steps:
@@ -26,6 +25,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
+          cache: 'npm'
 
       - name: "Install node.js dependencies"
         run: npm install
@@ -34,23 +34,6 @@ jobs:
       - name: "Build React app"
         run: npm run build
         working-directory: ./src
-      
-      - uses: actions/setup-python@v5
-        with:
-          python-version: ${{ matrix.python-version }}
-          cache: 'pip'
-      
-      - name: "Create Virtual environment"
-        run: |
-          python -m venv venv
-          source venv/bin/activate
-      
-      - name: "Install dependencies"
-        run: |
-          pip install -r backend/requirements.txt
-        
-      - name: "Run Api_Testing"
-        run: python backend/api_testing.py
 
         
   
