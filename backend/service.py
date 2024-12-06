@@ -93,13 +93,17 @@ def query(username):
     if houseID == -1:
         return {"id": -2, "name": "input correct username"}
     else:
-        ingredientsHouse = []
-        for ingredient in houseingre(houseID):
-            ingredientsHouse.append(ingredient["name"])
-        if not ingredientsHouse:
+        ingredients_list = houseingre(houseID)
+        if ingredients_list == -1:
             return {"id": -3, "name": "No ingredients found"}
         else:
-            return houserecipes(ingredientsHouse)
+            ingredientsHouse = []
+            for ingredient in ingredients_list:
+                ingredientsHouse.append(ingredient["name"])
+            if not ingredientsHouse:
+                return {"id": -3, "name": "No ingredients found"}
+            else:
+                return houserecipes(ingredientsHouse)
 
 """value = input("username: ")
 print((query(value))[0]["id"])"""
