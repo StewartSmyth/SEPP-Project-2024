@@ -9,31 +9,26 @@ jobs:
   build:
     name: "Build"
     runs-on: "ubuntu-latest"
-
     strategy:
       fail-fast: False
       matrix:
-        node-version: [14.x]
-    
+        node-version: [18.x, 20.x, 22.x]
+
     steps:
-      - name: "Clone Repository"
-        uses: actions/checkout@v4
-      
-      - name: "Setup Node.js"
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: "npm"
-          cache-dependency-path: ./src/package-lock.json
+    - name: "Clone Repository"
+      uses: actions/checkout@v4
 
-      - name: "Install node.js dependencies"
-        run: npm install
-        working-directory: ./src
+    - name: "Setup Node.js"
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
 
-      - name: "Build React app"
-        run: npm run build
-        working-directory: ./src
+    - name: "Install node.js dependencies"
+      run: npm ci
 
-        
-  
+    - name: "Build React app"
+      run: npm run build
 
+    - name: "Run Tests"
+      run: npm test
