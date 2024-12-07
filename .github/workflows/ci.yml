@@ -39,7 +39,7 @@ jobs:
       - name: "Upload Build Artifact"
         uses: actions/upload-artifact@v4
         with:
-          name: react-build
+          name: react-build-${{ github.run_id }}
           path: build/
 
   build-python:
