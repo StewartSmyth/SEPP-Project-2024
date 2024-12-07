@@ -34,6 +34,12 @@ jobs:
       # - name: "Run Tests"
       #   run: npm test
 
+      - name: "Upload Build Artifact"
+        uses: actions/upload-artifact@v3
+        with:
+          name: react-build
+          path: build/
+
   build-python:
     name: "Build and Test Python"
     runs-on: ubuntu-latest
