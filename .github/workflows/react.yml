@@ -30,5 +30,7 @@ jobs:
     - name: "Build React app"
       run: npm run build
 
-    - name: "Run Tests"
-      run: npm test
+    # Testing
+    # this can be implmemented when tests are implmeneted
+    #- name: "Run Tests"
+    #  run: npm test
