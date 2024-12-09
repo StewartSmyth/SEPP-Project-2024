@@ -102,5 +102,4 @@ def query(username):
 print((query(value))[0]["id"])"""
 
 
-        
 session.close()
