@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, String, ForeignKey, Sequence, create_eng
 from sqlalchemy.orm import sessionmaker, relationship, declarative_base
 from sqlalchemy.sql import text
 
-Database_url = "sqlite:///ssh_database.db"
+Database_url = "sqlite:///./ssh_database.db"
 
 Base = declarative_base()
 
