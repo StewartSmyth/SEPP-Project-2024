@@ -19,11 +19,11 @@ def tester():
 def ingredients(username):
     house_id = service.login(escape(username))
     if house_id == -1:
-        return {"id": -2, "name": "input correct username"}
+        return [{"id": 2, "name": "input correct username", "time": "", "ingredients": [""], "link": ""}]
     
     ingredients_list = service.houseingre(house_id)
     if ingredients_list == -1:
-        return {"id": -3, "name": "No ingredients found"}
+        return [{"id": 3, "name": "No ingredients found", "time": "", "ingredients": [""], "link": ""}]
     
     return ingredients_list
 
