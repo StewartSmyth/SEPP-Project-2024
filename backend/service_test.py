@@ -11,13 +11,13 @@ class serviceTesting(unittest.TestCase):
         self.assertIn('Pasta Carbonara', response[0]["name"])
 
         response = query("user3")
-        self.assertEqual(response["id"], -1, "Expected 'id' to be -1 when no recipes are found.")
+        self.assertEqual(response[0]["id"], 1, "Expected 'id' to be -1 when no recipes are found.")
 
         response = query("user4")
-        self.assertEqual(response["id"], -3, "Expected 'id' to be -3 when user has no ingredients.")
+        self.assertEqual(response[0]["id"], 3, "Expected 'id' to be -3 when user has no ingredients.")
 
         response = query("user5")
-        self.assertEqual(response["id"], -2, "Expected 'id' to be -1 when user is in database.")
+        self.assertEqual(response[0]["id"], 2, "Expected 'id' to be -1 when user is in database.")
 
         
 

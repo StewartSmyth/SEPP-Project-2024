@@ -11,6 +11,7 @@ class APITesting(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(b'Index page', response.data)
 
+
     #structure for test is test_{name of test}
 
 if __name__ == "__main__":

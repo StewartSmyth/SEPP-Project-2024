@@ -85,23 +85,23 @@ def houserecipes(ingredientList):
                               })
         return retRecipes
     else:
-        return {"id": -1, "name": "no recipes found"}
+        return [{"id": 1, "name": "no recipes found", "time": 0, "ingredients": [""], "link": ""}]
     
 
 def query(username):
     houseID = login(username)
     if houseID == -1:
-        return {"id": -2, "name": "input correct username"}
+        return [{"id": 2, "name": "input correct username", "time": 0, "ingredients": [""], "link": ""}]
     else:
         ingredients_list = houseingre(houseID)
         if ingredients_list == -1:
-            return {"id": -3, "name": "No ingredients found"}
+            return [{"id": 3, "name": "No ingredients found", "time": 0, "ingredients": [""], "link": ""}]
         else:
             ingredientsHouse = []
             for ingredient in ingredients_list:
                 ingredientsHouse.append(ingredient["name"])
             if not ingredientsHouse:
-                return {"id": -3, "name": "No ingredients found"}
+                return [{"id": 3, "name": "No ingredients found", "time": 0, "ingredients": [""], "link": ""}]
             else:
                 return houserecipes(ingredientsHouse)
 
