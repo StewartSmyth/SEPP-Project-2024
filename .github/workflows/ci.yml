@@ -82,5 +82,5 @@ jobs:
 
       - name: "Run Service_Test"
         run: |
-          
+          source venv/bin/activate
           python backend/service_test.py
